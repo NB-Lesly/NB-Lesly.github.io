@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lesly Ngounou Biega</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout : un courant de données qui passe du bleu (donnée brute) au vert (décision). Ouverture bleu nuit animée, sections claires, bleu = entreprise, vert = open data. */
+:root{
+  --bg:#F2F8FA; --surface:#FFFFFF; --ink:#0A1E3C; --muted:#4F647F; --line:#D3E1EA;
+  --blue:#1557D6; --green:#0A8A60; --blue-soft:#E2ECFF; --green-soft:#DCF5EA;
+  --glass:rgba(255,255,255,.8);
+  /* bandes sombres : identiques dans les deux thèmes, par choix */
+  --night:#051636; --night-2:#0A2A5E; --night-ink:#EAF3FF; --night-muted:#A3BAD9; --night-line:rgba(160,200,255,.18);
+  --sky:#5B9DFF; --mint:#3FE0A0;
+  --display:"Outfit","Trebuchet MS",system-ui,sans-serif;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#061226; --surface:#0C1E3D; --ink:#E6F0FB; --muted:#95ABC8; --line:#1B3156;
+  --blue:#74A8FF; --green:#4FDCA6; --blue-soft:#12305F; --green-soft:#0D3A33;
+  --glass:rgba(8,22,46,.78); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#061226; --surface:#0C1E3D; --ink:#E6F0FB; --muted:#95ABC8; --line:#1B3156;
+  --blue:#74A8FF; --green:#4FDCA6; --blue-soft:#12305F; --green-soft:#0D3A33;
+  --glass:rgba(8,22,46,.78); color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--blue)}
+img{max-width:100%}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px;border-radius:6px}
+h1,h2,h3{font-family:var(--display);line-height:1.08;text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.grad{background:linear-gradient(90deg,var(--sky),var(--mint));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* nav */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:17px;color:var(--ink);text-decoration:none}
+.brand i{width:22px;height:22px;border-radius:7px 7px 7px 0;background:linear-gradient(135deg,var(--blue),var(--green));display:block}
+nav{display:flex;gap:20px;flex-wrap:wrap}
+nav a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+
+/* hero : bande bleu nuit */
+.hero{position:relative;overflow:hidden;color:var(--night-ink);
+  background:radial-gradient(90% 120% at 100% 0%,#0B4A6E 0%,transparent 55%),linear-gradient(160deg,var(--night) 0%,var(--night-2) 100%)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding-block:72px 88px}
+.hero .wrap > *{min-width:0}
+.status{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12.5px;color:var(--mint);
+  border:1px solid rgba(63,224,160,.4);background:rgba(63,224,160,.08);padding:6px 12px;border-radius:999px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--mint);display:block}
+@media (prefers-reduced-motion:no-preference){.status i{animation:pulse 2s ease-in-out infinite}}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(63,224,160,0)}0%{box-shadow:0 0 0 0 rgba(63,224,160,.6)}}
+.hero h1{font-size:clamp(44px,7.2vw,84px);font-weight:800;margin-top:22px}
+.hero .role{font-family:var(--mono);font-size:clamp(13px,1.6vw,15px);color:var(--night-muted);margin:16px 0 20px}
+.hero .lead{font-size:19px;max-width:32em;margin-bottom:30px;color:var(--night-ink)}
+.hero .lead strong{color:var(--mint);font-weight:600}
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-weight:600;font-size:15px;padding:11px 20px;border-radius:999px;
+  text-decoration:none;border:1px solid var(--night-line);color:var(--night-ink);background:rgba(255,255,255,.06);cursor:pointer;transition:border-color .2s,background .2s}
+.btn:hover{border-color:var(--mint);background:rgba(63,224,160,.12)}
+.btn.primary{background:linear-gradient(90deg,var(--sky),var(--mint));color:#04122B;border-color:transparent}
+.btn.primary:hover{filter:brightness(1.08)}
+
+.scope{margin:0;background:rgba(5,22,54,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:1px solid var(--night-line);border-radius:20px;padding:18px 18px 14px;
+  box-shadow:0 30px 60px -30px rgba(63,224,160,.35)}
+.scope .label{color:var(--night-muted)}
+.scope-head{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.scope svg{display:block;width:100%;height:auto}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-family:var(--mono);font-size:11.5px;color:var(--night-muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend b{display:inline-block;width:14px;height:3px;border-radius:2px}
+.hero-edge{position:absolute;left:0;right:0;bottom:-1px;height:40px;background:var(--bg);clip-path:polygon(0 100%,100% 100%,100% 0,0 85%)}
+
+/* bandeau d'outils */
+.stack{display:flex;flex-wrap:wrap;gap:8px 22px;padding-block:22px 6px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.stack span::before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:8px;background:var(--blue)}
+.stack span:nth-child(even)::before{background:var(--green)}
+
+/* sections */
+section.block{padding-block:60px}
+.sec-head{display:flex;flex-direction:column;gap:10px;margin-bottom:30px;max-width:44em}
+.sec-head h2{font-size:clamp(30px,4.4vw,46px);font-weight:800}
+.sec-head p{color:var(--muted)}
+.kicker{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.kicker::before{content:"";width:28px;height:2px;background:currentColor}
+.k-blue{color:var(--blue)} .k-green{color:var(--green)}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card::after{content:"";position:absolute;right:-70px;top:-70px;width:190px;height:190px;border-radius:50%;background:var(--tint);opacity:.9;pointer-events:none}
+.card > *{position:relative;z-index:1}
+.card.blue{--tint:var(--blue-soft);--tone:var(--blue)}
+.card.green{--tint:var(--green-soft);--tone:var(--green)}
+.card:hover{border-color:var(--tone);box-shadow:0 18px 40px -26px var(--tone)}
+@media (prefers-reduced-motion:no-preference){.card:hover{transform:translateY(-3px)}}
+.glyph{width:64px;height:40px;color:var(--tone)}
+.card .ch{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.card h3{font-size:23px;font-weight:700}
+.card dl{margin:0;display:grid;gap:10px;font-size:15px}
+.card dt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--tone)}
+.card dd{margin:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.tag{font-family:var(--mono);font-size:12px;padding:4px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);color:var(--ink)}
+.note{font-size:14px;color:var(--muted);margin-top:20px;padding:12px 16px;border-radius:14px;background:var(--blue-soft)}
+.pill{font-family:var(--mono);font-size:11.5px;padding:4px 10px;border-radius:999px;white-space:nowrap;background:var(--green-soft);color:var(--green);border:1px dashed var(--green)}
+
+/* parcours */
+.timeline{list-style:none;margin:0;padding:0 0 0 28px;position:relative;display:grid;gap:26px}
+.timeline::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:3px;border-radius:2px;background:linear-gradient(180deg,var(--green),var(--blue))}
+.timeline li{position:relative;display:grid;grid-template-columns:170px 1fr;gap:24px}
+.timeline li > *{min-width:0}
+.timeline li::before{content:"";position:absolute;left:-28px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--bg);border:3px solid var(--green)}
+.timeline li:nth-child(n+3)::before{border-color:var(--blue)}
+.timeline .when{font-family:var(--mono);font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:3px}
+.timeline h3{font-size:22px;font-weight:700}
+.timeline .org{color:var(--blue);font-weight:600;margin:2px 0 6px}
+.timeline p{max-width:42em}
+
+/* compétences */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:26px}
+.skill h3{font-size:19px;font-weight:700;margin-bottom:10px}
+.certs-title{font-family:var(--display);font-size:24px;font-weight:700;margin:44px 0 16px}
+.certs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.cert{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px}
+.cert .mark{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;font-family:var(--mono);font-size:12px;font-weight:500;color:#fff;background:linear-gradient(135deg,#1557D6,#0A8A60)}
+.cert.prep{border-style:dashed;border-color:var(--green)}
+.cert.prep .mark{background:var(--green-soft);color:var(--green);border:1.5px dashed var(--green)}
+.cert strong{display:block;line-height:1.3}
+.cert span.sub{color:var(--muted);font-size:14px}
+.cert .state{display:inline-block;margin-top:4px;font-family:var(--mono);font-size:11.5px;color:var(--green)}
+
+/* contact : bande dégradée */
+.contact-band{color:#F2FAFF;background:linear-gradient(120deg,#0B3FA8 0%,#0A6E8C 55%,#0A7D5E 100%)}
+.contact-band .sec-head h2{color:#fff}
+.contact-band .sec-head p,.contact-band .label{color:#D4E8F5}
+.contact-band .kicker{color:#B8F5DA}
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:14px}
+.ccard{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:6px}
+.ccard .val{font-size:16.5px;font-weight:600;word-break:break-all;color:#fff}
+.ccard a.val{text-decoration:underline;text-underline-offset:3px}
+.copy{align-self:flex-start;margin-top:6px;font-size:13px;padding:6px 14px;border-color:rgba(255,255,255,.35);color:#fff}
+footer{padding-block:26px 40px;color:var(--muted);font-size:14px}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;gap:36px;padding-block:48px 72px}
+  .grid2{grid-template-columns:1fr}
+  .timeline li{grid-template-columns:1fr;gap:4px}
+  nav{gap:14px}
+}
+@media (max-width:520px){ nav a.opt{display:none} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i>Lesly N. B.</a>
+    <nav aria-label="Sections">
+      <a href="#projets">Projets</a>
+      <a href="#parcours" class="opt">Parcours</a>
+      <a href="#competences">Compétences</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <canvas id="flow" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div>
+        <span class="status"><i></i>Recherche un CDI · disponible à partir d'août 2027</span>
+        <h1>Lesly <span class="grad">Ngounou Biega</span></h1>
+        <p class="role">Data Analyst / Business Analyst / Data Engineer · IA</p>
+        <p class="lead">Je transforme des <strong>données brutes</strong> en pipelines fiables, en tableaux de bord, en modèles prédictifs et en assistants IA que les équipes utilisent au quotidien.</p>
+        <div class="actions">
+          <a class="btn primary" href="#projets">Voir les projets</a>
+          <a class="btn" href="#contact">Me contacter</a>
+          <a class="btn" id="lnk-github" href="#" target="_blank" rel="noopener" hidden>GitHub</a>
+          <a class="btn" id="lnk-linkedin" href="#" target="_blank" rel="noopener" hidden>LinkedIn</a>
+        </div>
+      </div>
+
+      <figure class="scope" aria-label="Exemple de signal avec dérive et anomalies détectées">
+        <div class="scope-head">
+          <span class="label">Détection d'anomalies</span>
+          <span class="label">signal illustratif</span>
+        </div>
+        <svg id="trace" viewBox="0 0 600 260" role="img" aria-hidden="true"></svg>
+        <div class="legend">
+          <span><b style="background:var(--sky)"></b>mesure</span>
+          <span><b style="background:var(--night-muted);height:1px"></b>seuil ±3σ</span>
+          <span><b style="background:var(--mint)"></b>anomalie / dérive</span>
+        </div>
+      </figure>
+    </div>
+    <div class="hero-edge"></div>
+  </section>
+
+  <div class="wrap">
+    <div class="stack" aria-label="Outils principaux">
+      <span>Python</span><span>SQL</span><span>Power BI</span><span>Google Cloud</span><span>BigQuery</span><span>scikit-learn</span><span>Copilot Studio</span><span>Power Automate</span>
+    </div>
+
+    <section class="block" id="projets">
+      <div class="sec-head">
+        <span class="kicker k-blue">Projets en entreprise</span>
+        <h2>De la donnée brute à l'outil utilisé</h2>
+        <p>Projets menés en alternance chez Renault Group, du fichier de mesures jusqu'à l'outil adopté par les équipes métier.</p>
+      </div>
+      <div class="grid2">
+        <article class="card blue">
+          <svg class="glyph" viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 30h8l4-6 5 9 5-22 5 19 4-8h6l5-12 5 6h13"/></svg>
+          <h3>Maintenance prédictive des outillages</h3>
+          <dl>
+            <div><dt>Besoin</dt><dd>Anticiper l'usure des outillages avant l'intervention de maintenance.</dd></div>
+            <div><dt>Démarche</dt><dd>Nettoyage de CSV multi-journées, reconstruction des cycles, indicateurs statistiques, détection de pics, étude des 7 jours précédant chaque intervention.</dd></div>
+          </dl>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span><span class="tag">Détection d'anomalies</span></div>
+        </article>
+        <article class="card blue">
+          <svg class="glyph" viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 28h60" stroke-dasharray="3 5" opacity=".6"/><path d="M2 30c8 0 10-2 18-2s10 1 16-3 10-9 26-17"/></svg>
+          <h3>Surveillance de dérive d'un procédé</h3>
+          <dl>
+            <div><dt>Besoin</dt><dd>Repérer les dérives lentes avant qu'elles deviennent des défauts.</dd></div>
+            <div><dt>Démarche</dt><dd>Pipeline multi-semaines de fusion d'exports CSV, suivi de l'instabilité du signal, détection des dérives persistantes.</dd></div>
+          </dl>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Séries temporelles</span><span class="tag">Indicateurs de dérive</span></div>
+        </article>
+        <article class="card blue">
+          <svg class="glyph" viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 36V22M18 36V10M30 36V18M42 36V6M54 36V26"/><path d="M2 36h60"/></svg>
+          <h3>Rapports de fiabilité assistés</h3>
+          <dl>
+            <div><dt>Besoin</dt><dd>Réduire le temps passé à préparer les rapports de fiabilité.</dd></div>
+            <div><dt>Démarche</dt><dd>Application d'import des données, génération automatique des graphiques, aide à l'analyse et préparation du plan d'actions.</dd></div>
+          </dl>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Data visualisation</span><span class="tag">IA générative</span></div>
+        </article>
+        <article class="card blue">
+          <svg class="glyph" viewBox="0 0 64 40" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h30a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H16l-8 7v-7H4z"/><path d="M44 16h12a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4v5l-6-5h-8"/></svg>
+          <h3>Assistants IA de diagnostic</h3>
+          <dl>
+            <div><dt>Besoin</dt><dd>Aider les techniciens à diagnostiquer plus vite et capitaliser les solutions.</dd></div>
+            <div><dt>Démarche</dt><dd>Assistants conversationnels avec recherche documentaire, comparaison d'images conformes / non conformes et base de solutions partagée.</dd></div>
+          </dl>
+          <div class="tags"><span class="tag">Copilot Studio</span><span class="tag">SharePoint</span><span class="tag">Power Automate</span><span class="tag">Prompt engineering</span></div>
+        </article>
+      </div>
+      <p class="note">Le code et les données de ces projets sont confidentiels. Les projets open data ci-dessous reprennent les mêmes méthodes sur des jeux de données publics.</p>
+    </section>
+
+    <section class="block" id="labo">
+      <div class="sec-head">
+        <span class="kicker k-green">Projets open data</span>
+        <h2>Mêmes méthodes, données publiques</h2>
+        <p>Code et analyses consultables sur <a href="https://github.com/NB-Lesly" target="_blank" rel="noopener">GitHub</a> au fur et à mesure de leur publication.</p>
+      </div>
+      <div class="grid2">
+        <article class="card green">
+          <div class="ch"><h3>Durée de vie restante de moteurs</h3><span class="pill">En cours</span></div>
+          <p>Prédiction de la durée de vie restante (RUL) de turboréacteurs à partir de 21 capteurs.</p>
+          <div class="tags"><span class="tag">NASA C-MAPSS</span><span class="tag">scikit-learn</span><span class="tag">Feature engineering</span></div>
+        </article>
+        <article class="card green">
+          <div class="ch"><h3>Détection de pannes d'un compresseur</h3><span class="pill">En cours</span></div>
+          <p>Détection précoce de défaillances sur les capteurs de pression et de température d'un compresseur de métro.</p>
+          <div class="tags"><span class="tag">MetroPT-3 (UCI)</span><span class="tag">Séries temporelles</span><span class="tag">Anomalies</span></div>
+        </article>
+        <article class="card green">
+          <div class="ch"><h3>Tableau de bord qualité de production</h3><span class="pill">En cours</span></div>
+          <p>KPI de taux de défaut et suivi des variables de procédé les plus liées aux rejets.</p>
+          <div class="tags"><span class="tag">SECOM (UCI)</span><span class="tag">Power BI</span><span class="tag">SQL</span></div>
+        </article>
+        <article class="card green">
+          <div class="ch"><h3>Assistant de diagnostic sur documentation</h3><span class="pill">En cours</span></div>
+          <p>Assistant qui répond aux questions techniques en citant les passages des manuels d'équipement.</p>
+          <div class="tags"><span class="tag">RAG</span><span class="tag">Python</span><span class="tag">GCP</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="block" id="parcours">
+      <div class="sec-head">
+        <span class="kicker k-blue">Parcours</span>
+        <h2>Expérience &amp; formation</h2>
+      </div>
+      <ol class="timeline">
+        <li>
+          <span class="when">09/2025 – 09/2027</span>
+          <div><h3>Data Analyst / Data Engineer · Alternance</h3><p class="org">Renault Group</p>
+          <p>Pipelines Python, KPI et tableaux de bord, maintenance prédictive, assistants IA. Recueil des besoins auprès des équipes métier et animation de formations sur l'IA générative et Microsoft Copilot.</p></div>
+        </li>
+        <li>
+          <span class="when">2024 – 2027</span>
+          <div><h3>Cycle ingénieur Informatique, Big Data &amp; IA</h3><p class="org">ESIGELEC, Rouen &amp; Poitiers</p>
+          <p>Mathématiques, informatique, bases de données, réseaux, gestion de projet. Présidente de l'association ESIGAFRIK (2025 – 2026), ambassadrice de l'école (2024 – 2026).</p></div>
+        </li>
+        <li>
+          <span class="when">08/2023</span>
+          <div><h3>Stage · Gestion de données clients</h3><p class="org">InfoGénie Technologies</p>
+          <p>Fiabilisation et analyse des données clients sous MySQL, suivi des stocks dans un tableau de bord Excel.</p></div>
+        </li>
+        <li>
+          <span class="when">2022 – 2024</span>
+          <div><h3>Classes préparatoires scientifiques</h3><p class="org">PrépaVogt, Cameroun</p>
+          <p>Trésorière de PrépaVogt Junior Consulting (2023 – 2024).</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section class="block" id="competences">
+      <div class="sec-head">
+        <span class="kicker k-green">Compétences</span>
+        <h2>Boîte à outils</h2>
+      </div>
+      <div class="skills">
+        <div class="skill"><h3>Données &amp; analyse</h3><div class="tags"><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">scikit-learn</span><span class="tag">SQL</span><span class="tag">Analyse exploratoire</span><span class="tag">Séries temporelles</span><span class="tag">Détection d'anomalies</span></div></div>
+        <div class="skill"><h3>Data engineering &amp; cloud</h3><div class="tags"><span class="tag">Google Cloud</span><span class="tag">BigQuery</span><span class="tag">ETL / ELT</span><span class="tag">Pipelines de données</span><span class="tag">GitHub</span></div></div>
+        <div class="skill"><h3>BI &amp; visualisation</h3><div class="tags"><span class="tag">Power BI</span><span class="tag">Looker</span><span class="tag">Spotfire</span><span class="tag">KPI</span><span class="tag">Reporting</span><span class="tag">Data storytelling</span></div></div>
+        <div class="skill"><h3>IA générative &amp; automatisation</h3><div class="tags"><span class="tag">Copilot Studio</span><span class="tag">Prompt engineering</span><span class="tag">Agents conversationnels</span><span class="tag">Power Automate</span><span class="tag">SharePoint</span></div></div>
+      </div>
+
+      <h3 class="certs-title">Certifications</h3>
+      <div class="certs">
+        <div class="cert"><span class="mark">GCP</span><div><strong>Associate Cloud Engineer</strong><span class="sub">Google Cloud Certified</span><br><span class="state">✓ Obtenue</span></div></div>
+        <div class="cert"><span class="mark">FR</span><div><strong>Certificat Voltaire</strong><span class="sub">Français courant · Anglais B2</span><br><span class="state">✓ Obtenu</span></div></div>
+        <div class="cert prep"><span class="mark">ML</span><div><strong>Professional Machine Learning Engineer</strong><span class="sub">Google Cloud</span><br><span class="state">En préparation · examen en janvier 2027</span></div></div>
+        <div class="cert prep"><span class="mark">PBI</span><div><strong>Power BI Data Analyst (PL-300)</strong><span class="sub">Microsoft</span><br><span class="state">En préparation</span></div></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="contact-band" id="contact">
+    <div class="wrap">
+      <div class="block" style="padding-block:60px">
+        <div class="sec-head">
+          <span class="kicker">Contact</span>
+          <h2>Parlons de votre poste</h2>
+          <p>Data, IA ou business analysis, en France ou à l'international. Disponible à partir d'août 2027.</p>
+        </div>
+        <div class="contact">
+          <div class="ccard"><span class="label">E-mail</span><span class="val" id="mail">ngounoulesly1@gmail.com</span>
+            <button class="btn copy" type="button" data-copy="mail" id="copy-mail">Copier</button></div>
+          <div class="ccard"><span class="label">Téléphone</span><span class="val" id="tel">+33 7 80 15 26 72</span>
+            <button class="btn copy" type="button" data-copy="tel" id="copy-tel">Copier</button></div>
+          <div class="ccard"><span class="label">LinkedIn</span><a class="val" href="https://www.linkedin.com/in/lesly-ngounou-biega" target="_blank" rel="noopener">in/lesly-ngounou-biega</a></div>
+          <div class="ccard"><span class="label">GitHub</span><a class="val" href="https://github.com/NB-Lesly" target="_blank" rel="noopener">github.com/NB-Lesly</a></div>
+          <div class="ccard"><span class="label">Localisation</span><span class="val">Rouen, Normandie</span><span class="label" style="text-transform:none;letter-spacing:0">Permis B</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">Lesly Ngounou Biega · Data Analyst / Business Analyst / Data Engineer</div></footer>
+
+<script>
+const LINKS = { github: "https://github.com/NB-Lesly", linkedin: "https://www.linkedin.com/in/lesly-ngounou-biega" };
+for (const [k, url] of Object.entries(LINKS)) {
+  const a = document.getElementById("lnk-" + k);
+  if (a && url) { a.href = url; a.hidden = false; }
+}
+
+document.querySelectorAll("[data-copy]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const el = document.getElementById(btn.dataset.copy);
+    const done = () => { btn.textContent = "Copié"; setTimeout(() => btn.textContent = "Copier", 1600); };
+    const fallback = () => { const r = document.createRange(); r.selectNodeContents(el);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = "Sélectionné"; setTimeout(() => btn.textContent = "Copier", 1600); };
+    try { navigator.clipboard.writeText(el.textContent.trim()).then(done, fallback); } catch (e) { fallback(); }
+  });
+});
+
+// Courant de données : rubans qui passent du bleu au vert
+(function () {
+  const cv = document.getElementById("flow"), ctx = cv.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w = 0, h = 0, t = 0;
+  function size() {
+    const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+    w = r.width; h = r.height; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const g = ctx.createLinearGradient(0, 0, w, 0);
+    g.addColorStop(0, "#2F7BFF"); g.addColorStop(1, "#3FE0A0");
+    ctx.strokeStyle = g;
+    const N = 16;
+    for (let k = 0; k < N; k++) {
+      const p = k / (N - 1);
+      ctx.globalAlpha = 0.10 + 0.28 * Math.sin(p * Math.PI);
+      ctx.lineWidth = 1 + 1.4 * p;
+      ctx.beginPath();
+      for (let x = -10; x <= w + 10; x += 12) {
+        const u = x / w;
+        const y = h * (0.52 + 0.36 * (p - 0.5) * (0.5 + u))
+          + Math.sin(u * 5.2 + t * 0.6 + k * 0.42) * h * 0.075
+          + Math.sin(u * 11 - t * 0.35 + k * 0.9) * h * 0.022;
+        x === -10 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    // points de données qui voyagent sur le courant
+    ctx.globalAlpha = 0.9; ctx.fillStyle = "#B8F5DA";
+    for (let i = 0; i < 14; i++) {
+      const u = ((i * 0.071 + t * 0.018 * (1 + (i % 3) * 0.4)) % 1), p = ((i * 37) % 16) / 15, k = p * 15, x = u * w;
+      const y = h * (0.52 + 0.36 * (p - 0.5) * (0.5 + u)) + Math.sin(u * 5.2 + t * 0.6 + k * 0.42) * h * 0.075 + Math.sin(u * 11 - t * 0.35 + k * 0.9) * h * 0.022;
+      ctx.beginPath(); ctx.arc(x, y, 2.2, 0, 6.3); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop() { t += 0.016; draw(); requestAnimationFrame(loop); }
+  size(); draw();
+  addEventListener("resize", () => { size(); draw(); });
+  if (!still) requestAnimationFrame(loop);
+})();
+
+// Signal illustratif : stable, puis dérive lente, avec pics anormaux
+(function () {
+  const svg = document.getElementById("trace");
+  const NS = "http://www.w3.org/2000/svg";
+  const L = 40, R = 590, T = 14, B = 232, FONT = "JetBrains Mono, monospace";
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const n = 180, base = 50, sigma = 1.6, pts = [];
+  const drift = i => i > 110 ? (i - 110) * 0.075 : 0;
+  for (let i = 0; i < n; i++) {
+    let v = base + drift(i) + (rnd() + rnd() + rnd() - 1.5) * sigma * 1.4;
+    if (i === 46 || i === 152 || i === 171) v += 7.5 + rnd() * 2;
+    pts.push(v);
+  }
+  const ymin = 40, ymax = 66;
+  const x = i => L + (i / (n - 1)) * (R - L);
+  const y = v => B - ((v - ymin) / (ymax - ymin)) * (B - T);
+  const el = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; svg.appendChild(e); return e; };
+
+  for (const v of [45, 50, 55, 60, 65]) {
+    el("line", { x1: L, x2: R, y1: y(v), y2: y(v), stroke: "var(--night-line)", "stroke-width": 1 });
+    el("text", { x: L - 8, y: y(v) + 4, "text-anchor": "end", fill: "var(--night-muted)", "font-size": 11, "font-family": FONT }, v);
+  }
+  el("rect", { x: x(110), y: T, width: R - x(110), height: B - T, fill: "var(--mint)", opacity: .1 });
+  el("text", { x: x(110) + 6, y: T + 14, fill: "var(--mint)", "font-size": 11, "font-family": FONT }, "dérive détectée");
+  for (const v of [base + 3 * sigma, base - 3 * sigma])
+    el("line", { x1: L, x2: R, y1: y(v), y2: y(v), stroke: "var(--night-muted)", "stroke-width": 1, "stroke-dasharray": "4 4" });
+  el("polyline", { points: pts.map((v, i) => x(i).toFixed(1) + "," + y(v).toFixed(1)).join(" "),
+    fill: "none", stroke: "var(--sky)", "stroke-width": 1.8, "stroke-linejoin": "round" });
+  pts.forEach((v, i) => { if (v > base + 3 * sigma + drift(i))
+    el("circle", { cx: x(i), cy: y(v), r: 5, fill: "var(--night)", stroke: "var(--mint)", "stroke-width": 2.2 }); });
+  el("line", { x1: L, x2: R, y1: B, y2: B, stroke: "var(--night-muted)", "stroke-width": 1 });
+  [["J-30", 0], ["J-15", 90], ["J0", n - 1]].forEach(([lab, i]) =>
+    el("text", { x: x(i), y: B + 18, "text-anchor": i === 0 ? "start" : i === n - 1 ? "end" : "middle", fill: "var(--night-muted)", "font-size": 11, "font-family": FONT }, lab));
+})();
+</script>
+</body>
+</html>
